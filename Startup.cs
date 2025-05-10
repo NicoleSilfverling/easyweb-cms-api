@@ -132,7 +132,7 @@ namespace Easyweb
                 var webRootPath = Path.Combine(_env.ContentRootPath, "wwwroot");
                 if (!Directory.Exists(webRootPath))
                     Directory.CreateDirectory(webRootPath);
-                
+
                 // Friendly developer error pages
                 //
                 app.UseDeveloperExceptionPage();
@@ -157,7 +157,7 @@ namespace Easyweb
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(_env.ContentRootPath, "css")),
-                RequestPath = "/css", 
+                RequestPath = "/css",
             });
 
             // Apply default easyweb settings for running the site
@@ -188,6 +188,12 @@ namespace Easyweb
             // You can add additional custom routes by simply adding routes.MapRoute(...) before AddEasywebRoutes
             app.UseEndpoints(routes =>
             {
+                // Add a custom route before Easyweb's default routes
+                routes.MapControllerRoute(
+                    name: "customData",
+                    pattern: "data", // URL pattern
+                    defaults: new { controller = "CustomData", action = "Index" } // Controller and action to call
+                );
                 // Add default easyweb routes
                 routes.AddEasywebRoutes(appSettings.SiteOptions);
             });
