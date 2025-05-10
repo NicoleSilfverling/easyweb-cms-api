@@ -3,7 +3,7 @@
         <span class="tag" ew-for="$Module/$label"></span>
         <h1 class="size-lg m-t-z m-b-z" ew-for="$label"></h1>
 
-        <p class="preamble" ew-for="introduction"></p>
+        <p class="preamble" ew-for="preamble"></p>
 
         <div class="news-date">
             @(DateTime.TryParse(Value("Date"), out var date) ? date.ToString("dd MMMM yyyy") : "")
@@ -13,7 +13,7 @@
         </div>
 
         <div class="ew m-b-4">
-            <ew-template for-key="description" />
+            <ew-template for-key="html" />
         </div>
 
     </div>
