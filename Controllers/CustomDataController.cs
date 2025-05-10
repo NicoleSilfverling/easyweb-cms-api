@@ -1,40 +1,24 @@
-// using System.Net.Http;
-// using System.Threading.Tasks;
-// using Microsoft.AspNetCore.Mvc;
-
-// namespace Easyweb.Controllers;
-
-// public class CustomDataController : Controller
-// {
-//     [HttpGet("/data")]
-//     public virtual async Task<IActionResult> Index()
-//     {
-//         string result;
-
-//         using (var client = new HttpClient())
-//         {
-//             var response = await client.GetAsync("https://en.wikipedia.org/api/rest_v1/page/summary/mars");
-//             result = await response.Content.ReadAsStringAsync();
-//         }
-
-//         return Ok(result);
-//     }
-// }
-
-
-
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace Easyweb.Controllers;
-
-public class CustomDataController : Controller
+namespace Easyweb.Controllers
 {
-    [HttpGet("/data")]
-    public IActionResult Index()
+    public class CustomDataController : Controller
     {
-        // Set the custom layout for this page
-        ViewData["Layout"] = "~/Views/Shared/_CustomLayout.cshtml";
+        [HttpGet("/data")]
+        public async Task<IActionResult> Index()
+        {
+            var client = new HttpClient();
+            var response = await client.GetAsync("https://en.wikipedia.org/api/rest_v1/page/summary/mars");
+            var content = await response.Content.ReadAsStringAsync();
 
-        return View();
+            var planetData = JsonConvert.DeserializeObject<PlanetDataModel>(content);
+
+            // return Content(content, "application/json");
+            return View(planetData);
+        }
     }
 }

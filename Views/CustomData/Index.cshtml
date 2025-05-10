@@ -2,6 +2,20 @@
     Layout = ViewData["Layout"] as string;
 }
 
-<h1>My new view</h1>
-<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias iusto, sed tenetur ducimus quo deleniti maiores,
-    veritatis pariatur beatae vitae odio, quaerat consectetur perspiciatis aliquam quasi quisquam sit corrupti? A! </p>
+<ew-template />
+
+@model PlanetDataModel
+
+<h1>@Model.Title</h1>
+
+@if (Model.Thumbnail != null)
+{
+    <div>
+        <img src="@Model.Thumbnail.Source" alt="@Model.Title" width="@Model.Thumbnail.Width"
+            height="@Model.Thumbnail.Height" />
+    </div>
+}
+
+<p><strong>Description:</strong> @Model.Description</p>
+
+<p><strong>Extract:</strong> @Model.Extract</p>
