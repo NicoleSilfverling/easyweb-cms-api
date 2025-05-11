@@ -1,113 +1,268 @@
-/* CSS Reset */
-/* 1. Use a more-intuitive box-sizing model */
+/* --- RESET + BASE --- */
 *, *::before, *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background: radial-gradient(ellipse at center, #000 0%, #111 100%);
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  text-align: center;
+}
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* --- SOLAR SYSTEM --- */
+.solar-system {
+  position: relative;
+  width: 70vw;
+  height: 70vw;
+  max-width: 800px;
+  max-height: 800px;
+  margin: 0 auto;
+  animation: rotateSystem 120s linear infinite;
+}
+
+@keyframes rotateSystem {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6vw;
+  height: 6vw;
+  background: radial-gradient(circle, #fff700 0%, #f90 60%, #000 100%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 60px 20px rgba(255, 200, 0, 0.5);
+  z-index: 2;
+}
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.planet {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: calc(var(--planet-size) * var(--planet-scale));
+    height: calc(var(--planet-size) * var(--planet-scale));
+    background-color: var(--planet-color);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  }
+.rings {
+  position: absolute;
+  width: 160%;
+  height: 160%;
+  top: -30%;
+  left: -30%;
+  border: 2px solid rgba(200, 200, 200, 0.3);
+  border-radius: 50%;
+}
+
+/* --- PLANET BUTTONS --- */
+#planetList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+.planetButton {
+  --planet-size: 60px;
+  --planet-color: #ccc;
+  width: var(--planet-size);
+  height: var(--planet-size);
+  border-radius: 50%;
+  background-color: var(--planet-color);
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.planetButton:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.9);
+}
+#planetList h4 {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* --- POPUP --- */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
+    color: #ddd;
+    border: 1px solid #444;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.4);
+    z-index: 1000;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    animation: fadeInPopup 0.3s ease-in-out;
+
+    /* Flex centering */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
   
-  /* 2. Remove default margin */
-  * {
-    margin: 0;
-  }
-  
-  /* 3. Enable keyword animations */
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      interpolate-size: allow-keywords;
+  /* Fade-in animation */
+  @keyframes fadeInPopup {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -45%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
     }
   }
   
-  body {
-    /* 4. Add accessible line-height */
+  /* Scrollbar styling for WebKit (Chrome, Safari, Edge) */
+  .popup::-webkit-scrollbar {
+    width: 8px;
+  }
+  .popup::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .popup::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #33e0ffd7 0%, #0077ff 100%);
+    border-radius: 10px;
+    box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+  .popup::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #33e0ffd7 0%, #3399ff 100%);
+  }
+  
+  /* Scrollbar styling for Firefox */
+  .popup {
+    scrollbar-width: thin;
+    scrollbar-color: #33e0ffd7 transparent;
+  }
+  
+
+
+.popup h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  
+  .popup p {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
     line-height: 1.5;
-    /* 5. Improve text rendering */
-    -webkit-font-smoothing: antialiased;
+    text-align: left;
   }
   
-  /* 6. Improve media defaults */
-  img, picture, video, canvas, svg {
-    display: block;
+  .popup img {
     max-width: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   }
   
-  /* 7. Inherit fonts for form controls */
-  input, button, textarea, select {
-    font: inherit;
+  .popup button {
+    margin-top: 12px;
+    padding: 10px 18px;
+    background: #00bcd4;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
   }
   
-  /* 8. Avoid text overflows */
-  p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
+  .popup button:hover {
+    background: #0097a7;
   }
   
-  /* 9. Improve line wrapping */
-  p {
-    text-wrap: pretty;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    text-wrap: balance;
-  }
-  
-  /*
-    10. Create a root stacking context
-  */
-  #root, #__next {
-    isolation: isolate;
-  }
-
-  /* ------------------------------------------ */
-
-body {
-    /* background-color: rgb(31, 36, 42); */
-    background: radial-gradient(ellipse at center, #000 0%, #111 100%);
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    padding: 20px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-
-.popup {
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 20px;
-    color: #ccc;
-    background-color: #0e0d16;
-    border: 1px solid #ccc;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    padding: 10px;
-}
-
-.hidden {
+  .hidden {
     display: none;
 }
+  
 
-.planetButton {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin: 10px;
-    border: none;
-    color: white;
-    font-weight: bold;
-    background-color: #222;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(0, 200, 255, 0.6); /* Blue-ish glow */
-    transition: transform 0.2s, box-shadow 0.3s;
-    width: var(--planet-size);
-    height: var(--planet-size);
-    background-color: var(--planet-color);
+/* --- RESPONSIVE --- */
+:root {
+    --planet-scale: 1;
+  }
+@media (max-width: 768px) {
+  .solar-system {
+    width: 85vw;
+    height: 85vw;
+  }
+  .sun {
+    width: 10vw;
+    height: 10vw;
+  }
+  :root {
+    --planet-scale: 0.8;
+  }
 }
+@media (max-width: 480px) {
+  .solar-system {
+    width: 95vw;
+    height: 95vw;
+  }
+  .sun {
+    width: 12vw;
+    height: 12vw;
+  }
+  :root {
+    --planet-scale: 0.6;
+  }
+}
+@media (max-width: 320px) {
+    :root {
+      --planet-scale: 0.45;
+    }
+  }
 
-.planetButton:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px rgba(0, 200, 255, 0.9);
-}
+
+
+  

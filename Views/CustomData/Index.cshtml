@@ -4,7 +4,6 @@
 
 }
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,20 +15,52 @@
 </head>
 
 <body>
-    <div>
-        <h1>Click a planet to get more details</h1>
+    <div class="layout">
 
-        <!-- Display a list of planet names -->
-        <ul id="planetList">
+        <div>
+            <h1>Click a planet to get more details</h1>
+
+            <!-- Display a list of planet names -->
+            <ul id="planetList">
+                @foreach (var planet in planets)
+                {
+                    <li>
+                        <h4>@planet.Name</h4>
+                        <button class="planetButton" data-planet="@planet.WikiName" data-size="@planet.SizeFactor"
+                            data-color="@planet.Color" data-hasrings="@planet.HasRings.ToString()"></button>
+
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="solar-system">
+            <div class="sun"></div>
+
             @foreach (var planet in planets)
             {
-                <li><button class="planetButton" data-planet="@planet.WikiName" data-size="@planet.SizeFactor"
-                        data-color="@planet.Color" data-hasrings="@planet.HasRings.ToString()"></button>
-                    <h4>@planet.Name</h4>
-                </li>
+                // The orbit size increases based on the planet index.
+                var orbitSize = 50 + planets.IndexOf(planet) * 30; // Increasing orbit size
+
+                <div class="orbit" style="width: @(orbitSize * 2)px; height: @(orbitSize * 2)px;">
+                    <div class="planet" style="--planet-size: @(planet.SizeFactor / 2.5)px; --planet-color: @planet.Color;">
+                        @if (planet.HasRings)
+                        {
+                            <div class="rings"></div>
+                        }
+                    </div>
+                </div>
             }
-        </ul>
+        </div>
+
     </div>
+
+
+
+
+
+
+
+
 
     <!-- Popup for planet details -->
     <div id="planetInfoPopup" class="popup hidden">
