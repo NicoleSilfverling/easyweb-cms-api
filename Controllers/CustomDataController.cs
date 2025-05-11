@@ -18,7 +18,6 @@ namespace Easyweb.Controllers
         {
             var planets = new List<Planet>
             {
-                new Planet { Name = "Sun", WikiName = "Sun", SizeFactor = 150, Color = "#FFD562", HasRings = false },
                 new Planet { Name = "Mercury", WikiName = "Mercury_(planet)", SizeFactor = 30, Color = "#aaa", HasRings = false },
                 new Planet { Name = "Venus", WikiName = "Venus", SizeFactor = 50, Color = "#c9b37e", HasRings = false },
                 new Planet { Name = "Earth", WikiName = "Earth", SizeFactor = 55, Color = "#2e77bc", HasRings = false },
