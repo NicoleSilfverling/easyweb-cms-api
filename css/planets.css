@@ -1,6 +1,76 @@
+/* CSS Reset */
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* 2. Remove default margin */
+  * {
+    margin: 0;
+  }
+  
+  /* 3. Enable keyword animations */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+  
+  body {
+    /* 4. Add accessible line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* 6. Improve media defaults */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* 7. Inherit fonts for form controls */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  
+  /* 8. Avoid text overflows */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  
+  /* 9. Improve line wrapping */
+  p {
+    text-wrap: pretty;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+  
+  /*
+    10. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+
+  /* ------------------------------------------ */
+
 body {
-    background-color: rgb(31, 36, 42);
+    /* background-color: rgb(31, 36, 42); */
+    background: radial-gradient(ellipse at center, #000 0%, #111 100%);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    padding: 20px;
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 
 .popup {
     position: fixed;
@@ -8,12 +78,36 @@ body {
     left: 50%;
     transform: translateX(-50%);
     padding: 20px;
-    background-color: #fff;
+    color: #ccc;
+    background-color: #0e0d16;
     border: 1px solid #ccc;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    padding: 10px;
 }
 
 .hidden {
     display: none;
+}
+
+.planetButton {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: #222;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 200, 255, 0.6); /* Blue-ish glow */
+    transition: transform 0.2s, box-shadow 0.3s;
+    width: var(--planet-size);
+    height: var(--planet-size);
+    background-color: var(--planet-color);
+}
+
+.planetButton:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(0, 200, 255, 0.9);
 }

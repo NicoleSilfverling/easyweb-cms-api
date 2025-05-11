@@ -1,7 +1,9 @@
 @{
     Layout = null;
     var planets = Model;
+
 }
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +23,10 @@
         <ul id="planetList">
             @foreach (var planet in planets)
             {
-                <li><button class="planetButton" data-planet="@planet">@planet.Split('_')[0]</button></li>
+                <li><button class="planetButton" data-planet="@planet.WikiName" data-size="@planet.SizeFactor"
+                        data-color="@planet.Color" data-hasrings="@planet.HasRings.ToString()"></button>
+                    <h4>@planet.Name</h4>
+                </li>
             }
         </ul>
     </div>
@@ -75,6 +80,16 @@
         function closePopup() {
             document.getElementById("planetInfoPopup").classList.add("hidden");
         }
+
+        // Set planets size and color
+        document.querySelectorAll('.planetButton').forEach(planet => {
+            const size = parseFloat(planet.dataset.size);
+            const color = planet.dataset.color;
+
+            planet.style.setProperty('--planet-size', `${size}px`);
+            planet.style.setProperty('--planet-color', color);
+        });
+
     </script>
 </body>
 
