@@ -1,21 +1,81 @@
 @{
-    Layout = ViewData["Layout"] as string;
+    Layout = null;
+    var planets = Model;
 }
 
-<ew-template />
+<!DOCTYPE html>
+<html lang="en">
 
-@model PlanetDataModel
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/planets.css">
+    <title>Planets</title>
+</head>
 
-<h1>@Model.Title</h1>
-
-@if (Model.Thumbnail != null)
-{
+<body>
     <div>
-        <img src="@Model.Thumbnail.Source" alt="@Model.Title" width="@Model.Thumbnail.Width"
-            height="@Model.Thumbnail.Height" />
+        <h1>Click a planet to get more details</h1>
+
+        <!-- Display a list of planet names -->
+        <ul id="planetList">
+            @foreach (var planet in planets)
+            {
+                <li><button class="planetButton" data-planet="@planet">@planet.Split('_')[0]</button></li>
+            }
+        </ul>
     </div>
-}
 
-<p><strong>Description:</strong> @Model.Description</p>
+    <!-- Popup for planet details -->
+    <div id="planetInfoPopup" class="popup hidden">
+        <h2 id="planetTitle"></h2>
+        <strong>
+            <p id="planetDescription"></p>
+        </strong>
+        <img id="planetImage" src="" alt="Planet Thumbnail" />
 
-<p><strong>Extract:</strong> @Model.Extract</p>
+        <p id="planetExtract"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        // Listen for planet button clicks
+        document.querySelectorAll('.planetButton').forEach(button => {
+            button.addEventListener('click', function () {
+                let planetName = this.getAttribute('data-planet');
+                fetchPlanetData(planetName);
+            });
+        });
+
+        // Fetch data for the selected planet
+        async function fetchPlanetData(planet) {
+            try {
+                let response = await fetch(`/data/${planet}`);
+                let data = await response.json();
+                showPlanetInfo(data);
+            } catch (error) {
+                console.error("Error fetching planet data:", error);
+            }
+        }
+
+        // Display planet information in the popup
+        function showPlanetInfo(data) {
+            document.getElementById('planetTitle').textContent = data.title;
+            document.getElementById('planetDescription').textContent = data.description;
+            document.getElementById('planetExtract').textContent = data.extract;
+
+            if (data.thumbnail && data.thumbnail.source) {
+                document.getElementById('planetImage').src = data.thumbnail.source;
+            }
+
+            document.getElementById("planetInfoPopup").classList.remove("hidden");
+        }
+
+        // Close the popup
+        function closePopup() {
+            document.getElementById("planetInfoPopup").classList.add("hidden");
+        }
+    </script>
+</body>
+
+</html>
