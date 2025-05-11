@@ -188,12 +188,6 @@ namespace Easyweb
             // You can add additional custom routes by simply adding routes.MapRoute(...) before AddEasywebRoutes
             app.UseEndpoints(routes =>
             {
-                // Add a custom route before Easyweb's default routes
-                routes.MapControllerRoute(
-                    name: "customData",
-                    pattern: "data", // URL pattern
-                    defaults: new { controller = "CustomData", action = "Index" } // Controller and action to call
-                );
                 // Add default easyweb routes
                 routes.AddEasywebRoutes(appSettings.SiteOptions);
             });
