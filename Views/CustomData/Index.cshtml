@@ -1,7 +1,6 @@
 @{
     Layout = null;
     var planets = Model;
-
 }
 
 <!DOCTYPE html>
@@ -20,122 +19,124 @@
             <source src="/videos/intro.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="layout">
 
+    <div class="layout">
         <div>
             <h1>Click a planet to get more details</h1>
 
-            <!-- Display a list of planet names -->
+            <!-- Display a list of planets -->
             <ul id="planetList">
                 @foreach (var planet in planets)
                 {
                     <li>
                         <h4>@planet.Name</h4>
                         <button class="planetButton" data-planet="@planet.WikiName" data-size="@planet.SizeFactor"
-                            data-color="@planet.Color" data-hasrings="@planet.HasRings.ToString()"></button>
-
+                            data-color="@planet.Color">
+                        </button>
                     </li>
                 }
             </ul>
         </div>
+
         <div class="solar-system">
             <div class="sun"></div>
-
-            @foreach (var planet in planets)
+            @for (int i = 0; i < planets.Count; i++)
             {
-                // The orbit size increases based on the planet index.
-                var orbitSize = 50 + planets.IndexOf(planet) * 30; // Increasing orbit size
-
-                <div class="orbit" style="width: @(orbitSize * 2)px; height: @(orbitSize * 2)px;">
-                    <div class="planet" style="--planet-size: @(planet.SizeFactor / 2.5)px; --planet-color: @planet.Color;">
-                        @if (planet.HasRings)
-                        {
-                            <div class="rings"></div>
-                        }
+                var planet = planets[i];
+                var orbitSize = 50 + i * 30;
+                <div class="orbit" data-orbit="@orbitSize">
+                    <div class="planet-container" data-size="@planet.SizeFactor" data-color="@planet.Color" data-index="@i">
+                        <div class="planet-wrapper">
+                            <div class="planet">
+                                @if (planet.HasRings)
+                                {
+                                    <div class="rings"></div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
         </div>
-
     </div>
 
-
-
-
-
-
-
-
-
-    <!-- Popup for planet details -->
+    <!-- Popup -->
     <div id="planetInfoPopup" class="popup hidden">
         <h2 id="planetTitle"></h2>
         <strong>
             <p id="planetDescription"></p>
         </strong>
         <img id="planetImage" src="" alt="Planet Thumbnail" />
-
         <p id="planetExtract"></p>
         <button onclick="closePopup()">Close</button>
     </div>
 
     <script>
-        @* introvideo *@
-          const introVideo = document.getElementById('introVideo');
+        // Intro
+        const introVideo = document.getElementById('introVideo');
         const introContainer = document.getElementById('introVideoContainer');
-
         introVideo.addEventListener('ended', () => {
             introContainer.classList.add('hidden');
         });
 
-
-
-        // Listen for planet button clicks
+        // Planet buttons
         document.querySelectorAll('.planetButton').forEach(button => {
-            button.addEventListener('click', function () {
-                let planetName = this.getAttribute('data-planet');
+            button.addEventListener('click', () => {
+                const planetName = button.getAttribute('data-planet');
                 fetchPlanetData(planetName);
             });
+
+            const size = parseFloat(button.dataset.size);
+            const color = button.dataset.color;
+            button.style.setProperty('--planet-size', `${size}px`);
+            button.style.setProperty('--planet-color', color);
         });
 
-        // Fetch data for the selected planet
+        // Solar system planet rendering
+        document.querySelectorAll('.orbit').forEach(orbit => {
+            const orbitSize = parseFloat(orbit.dataset.orbit);
+            orbit.style.setProperty('--orbit-size', `${orbitSize}px`);
+        });
+
+        document.querySelectorAll('.planet-container').forEach(container => {
+            const planet = container.querySelector('.planet');
+            const size = parseFloat(container.dataset.size);
+            const color = container.dataset.color;
+            const angle = Math.floor(Math.random() * 360);
+
+            planet.style.setProperty('--planet-size', `${size / 2.5}px`);
+            planet.style.setProperty('--planet-color', color);
+
+            // Set initial angle offset on container (this rotates the whole orbit's start angle)
+            container.style.transform = `rotate(${angle}deg)`;
+        });
+
+        // Fetch & display data
         async function fetchPlanetData(planet) {
             try {
-                let response = await fetch(`/data/${planet}`);
-                let data = await response.json();
+                const response = await fetch(`/data/${planet}`);
+                const data = await response.json();
                 showPlanetInfo(data);
             } catch (error) {
                 console.error("Error fetching planet data:", error);
             }
         }
 
-        // Display planet information in the popup
         function showPlanetInfo(data) {
             document.getElementById('planetTitle').textContent = data.title;
             document.getElementById('planetDescription').textContent = data.description;
             document.getElementById('planetExtract').textContent = data.extract;
 
-            if (data.thumbnail && data.thumbnail.source) {
+            if (data.thumbnail?.source) {
                 document.getElementById('planetImage').src = data.thumbnail.source;
             }
 
             document.getElementById("planetInfoPopup").classList.remove("hidden");
         }
 
-        // Close the popup
         function closePopup() {
             document.getElementById("planetInfoPopup").classList.add("hidden");
         }
-
-        // Set planets size and color
-        document.querySelectorAll('.planetButton').forEach(planet => {
-            const size = parseFloat(planet.dataset.size);
-            const color = planet.dataset.color;
-
-            planet.style.setProperty('--planet-size', `${size}px`);
-            planet.style.setProperty('--planet-color', color);
-        });
-
     </script>
 </body>
 

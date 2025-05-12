@@ -87,25 +87,57 @@ ul {
   box-shadow: 0 0 60px 20px rgba(255, 200, 0, 0.5);
   z-index: 2;
 }
-.orbit {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border: 1px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
+@keyframes rotate-orbit {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
+
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(var(--orbit-size) * 2);
+    height: calc(var(--orbit-size) * 2);
+    margin-left: calc(-1 * var(--orbit-size));
+    margin-top: calc(-1 * var(--orbit-size));
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.planet-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: center center;
+}
+
+.planet-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: center center;
+    animation: rotate-orbit 120s linear infinite;
+}
+
 .planet {
     position: absolute;
     top: 0;
     left: 50%;
-    width: calc(var(--planet-size) * var(--planet-scale));
-    height: calc(var(--planet-size) * var(--planet-scale));
+    width: var(--planet-size);
+    height: var(--planet-size);
+    transform: translateX(-50%);
     background-color: var(--planet-color);
     border-radius: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
-  }
+}
 .rings {
   position: absolute;
   width: 160%;
