@@ -15,6 +15,11 @@
 </head>
 
 <body>
+    <div id="introVideoContainer">
+        <video id="introVideo" autoplay muted playsinline>
+            <source src="/videos/intro.mp4" type="video/mp4">
+        </video>
+    </div>
     <div class="layout">
 
         <div>
@@ -75,6 +80,16 @@
     </div>
 
     <script>
+        @* introvideo *@
+          const introVideo = document.getElementById('introVideo');
+        const introContainer = document.getElementById('introVideoContainer');
+
+        introVideo.addEventListener('ended', () => {
+            introContainer.classList.add('hidden');
+        });
+
+
+
         // Listen for planet button clicks
         document.querySelectorAll('.planetButton').forEach(button => {
             button.addEventListener('click', function () {

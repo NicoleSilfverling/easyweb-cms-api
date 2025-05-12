@@ -34,7 +34,31 @@ ul {
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
+  max-width: 1200px;
 }
+/* --- Intro video --- */
+#introVideoContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  #introVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hidden {
+    display: none !important;
+  }
 
 /* --- SOLAR SYSTEM --- */
 .solar-system {
