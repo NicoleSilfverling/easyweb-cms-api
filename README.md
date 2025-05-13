@@ -1,3 +1,32 @@
+# 🌍 Solar System Explorer
+
+An ASP.NET Core MVC app that displays interactive planetary data using the Wikipedia REST API.
+
+### API
+
+The `/planets` endpoint provides information about the planets in the solar system.
+
+- **Example**: [http://localhost:5000/planets](http://localhost:5000/planets)
+  
+
+
+🛠️ Built with:
+- ASP.NET Core
+- Wikipedia REST API
+- C#, Razor, HTML/CSS/JS
+
+🎯 Features:
+- Clickable planets with dynamic API data
+- Popup with Wikipedia summaries and thumbnails
+- Animated solar system layout
+
+
+# Coffee Template (Debug)
+### Easyweb
+🔗 **Live Demo**: [Demo link](https://dev-nicole-newsite.easyweb.site/)
+
+-----
+
 # Easyweb.site plain example template
 
 Simple and plain .NET 8 starting template for creating content using Easyweb CMS and ew-tag-pack.
